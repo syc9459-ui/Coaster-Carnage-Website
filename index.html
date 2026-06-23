@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coaster Carnage</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:  #F7F3E9;
+      --dark:   #1A1A18;
+      --red:    #C0392B;
+      --brown:  #8B5E3C;
+      --muted:  #6B6557;
+      --light:  #EDE8DA;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--dark);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    /* ── NAV ───────────────────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 2rem;
+    }
+
+    .nav-logo {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.6rem;
+      color: var(--red);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #ccc;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover { color: var(--red); }
+
+    /* ── TRACK RAIL ────────────────────────────────────────── */
+    .rail {
+      width: 100%;
+      height: 14px;
+      background: repeating-linear-gradient(
+        to right,
+        var(--brown) 0px, var(--brown) 16px,
+        transparent 16px, transparent 26px
+      ),
+      linear-gradient(to bottom,
+        var(--dark) 0, var(--dark) 2px,
+        transparent 2px, transparent 4px,
+        var(--dark) 4px, var(--dark) 6px
+      );
+    }
+
+    /* ── HERO ──────────────────────────────────────────────── */
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem 2rem;
+    }
+
+    .eyebrow {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+    }
+
+    h1 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(1.4rem, 5vw, 2.8rem);
+      color: var(--red);
+      line-height: 1.4;
+      text-shadow: 3px 3px 0 var(--brown);
+    }
+
+    .badges {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .badge {
+      background: var(--dark);
+      color: #ddd;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.5rem;
+      padding: 0.4rem 0.8rem;
+    }
+
+    /* ── VIDEO BOX ─────────────────────────────────────────── */
+    .video-wrap {
+      max-width: 860px;
+      margin: 2.5rem auto 0;
+      padding: 0 1.5rem;
+    }
+
+    .video-box {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+      border: 3px solid var(--dark);
+      box-shadow: 6px 6px 0 var(--brown);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-box span {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(0.4rem, 1.2vw, 0.6rem);
+      color: #444;
+    }
+
+    /* ── SECTIONS ──────────────────────────────────────────── */
+    section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 2rem;
+    }
+
+    .section-label {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.55rem;
+      color: var(--red);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    h2 {
+      font-size: clamp(1.3rem, 3vw, 1.9rem);
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── PROSE BLOCKS ──────────────────────────────────────── */
+    .prose-block {
+      margin-bottom: 1.6rem;
+    }
+
+    .prose-block strong {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.4rem;
+    }
+
+    .prose-block p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 720px;
+    }
+
+    /* ── SCREENSHOT BOXES ──────────────────────────────────── */
+    .screenshots {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+      margin-top: 2rem;
+    }
+
+    .screenshot-box {
+      aspect-ratio: 16/9;
+      background: #000;
+      border: 3px solid var(--dark);
+      box-shadow: 4px 4px 0 var(--brown);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .screenshot-box span {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.45rem;
+      color: #444;
+    }
+
+    /* ── DEV LOG ───────────────────────────────────────────── */
+    .log-entries {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .log-entry {
+      border-left: 3px solid var(--red);
+      padding: 0.8rem 1.2rem;
+      background: var(--light);
+    }
+
+    .log-entry-title {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--dark);
+      margin-bottom: 0.3rem;
+    }
+
+    .log-entry p {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    /* ── FOOTER ────────────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      border-top: 1px solid #ddd;
+      margin-top: 2rem;
+    }
+
+    /* ── RESPONSIVE ────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      nav { padding: 0.6rem 1rem; }
+      .nav-links { gap: 0.8rem; }
+      section { padding: 2.5rem 1rem 1.5rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="#top">CC</a>
+    <ul class="nav-links">
+      <li><a href="#game">Game</a></li>
+      <li><a href="#world">Game World</a></li>
+      <li><a href="#dev">Development</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div id="top" class="hero">
+    <p class="eyebrow">2D Pixel Arcade · Unity 6</p>
+    <h1>COASTER<br>CARNAGE</h1>
+    <div class="badges">
+      <span class="badge">PC</span>
+      <span class="badge">Arcade</span>
+      <span class="badge">Pixel Art</span>
+      <span class="badge">Unity 6</span>
+    </div>
+  </div>
+
+  <div class="rail"></div>
+
+  <!-- GAME -->
+  <section id="game">
+    <p class="section-label">01 · Game</p>
+    <h2>Coaster Carnage Set-Up</h2>
+
+    <div class="prose-block">
+      <strong>The Setup</strong>
+      <p>You play as a theme park goer at a run-down amusement park which was once-beloved boardwalk attraction that's fallen into disrepair. The park's signature ride, the Carnage Coaster, hasn't had a proper inspection in years. Bolts are loose, birds have nested on the tracks and new challenges confront you at every different ride. The goal is to collect enough coins to advance to the next. Don't lose all your hearts before the timer runs out.</p>
+    </div>
+
+    <div class="prose-block">
+      <strong>The World</strong>
+      <p>Each coaster starts the same way (from the platform with a queue line) and sits on a weathered platform. Each ride starts differently, but the platform is always very similar. The character only experiences small changes to their appearance depending on the location.</p>
+    </div>
+
+    <div class="video-wrap" style="max-width:100%; padding:0; margin-top:2rem;">
+      <div class="video-box">
+        <span>&#9654;&nbsp; gameplay recording coming soon</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="rail"></div>
+
+  <!-- GAME WORLD -->
+  <section id="world">
+    <p class="section-label">02 · Game World</p>
+    <h2>Visual, Audio &amp; Cultural Design</h2>
+
+    <div class="prose-block">
+      <strong>Visual Elements</strong>
+      <p>The pixel art style keeps everything grounded and charming rather than dramatic. Characters and obstacles are small, readable, and expressive (a flapping bird, a wobbling puddle, a loose bolt skittering across the track). Backgrounds differ each ride (beach, poppy field, forest etc…). Each scene and character changes every new level.</p>
+    </div>
+
+    <div class="screenshots">
+      <img src="poppy_image.png" alt="Poppy field level" style="width:100%; aspect-ratio:16/9; object-fit:cover; border:3px solid var(--dark); box-shadow:4px 4px 0 var(--brown);">
+      <img src="beach_image.png" alt="Beach level" style="width:100%; aspect-ratio:16/9; object-fit:cover; border:3px solid var(--dark); box-shadow:4px 4px 0 var(--brown);">
+      <img src="beach_scene.png" alt="Beach scene" style="width:100%; aspect-ratio:16/9; object-fit:cover; border:3px solid var(--dark); box-shadow:4px 4px 0 var(--brown);">
+    </div>
+
+    <div class="prose-block" style="margin-top:2rem;">
+      <strong>Audio Elements</strong>
+      <p>The soundtrack should feel slightly chaotic (upbeat). Think acoustic instruments mixed with a bouncy melody that wouldn't feel out of place in Stardew Valley. Sound effects are tactile and cartoon-like. The coin pickup chimes bright and satisfying. Obstacle hits sound like a dull thunk. The wind rushing past as the cart picks up speed is constant, grounding the player in motion.</p>
+    </div>
+
+    <div class="prose-block">
+      <strong>Media / Art References</strong>
+      <p>Stardew Valley is the primary visual reference because the pixel art feels handmade, warm, and full of small details that reward attention. Rollercoaster Tycoon sets the spatial and tonal reference: a theme park built by someone with enthusiasm but limited budget. The rides work, mostly. The atmosphere is cheerful chaos. The gameplay loop draws from Mario in the way that the player is constantly dodging objects/things to make it to the end of the ride.</p>
+    </div>
+  </section>
+
+  <div class="rail"></div>
+
+  <!-- DEVELOPMENT -->
+  <section id="dev">
+    <p class="section-label">03 · Development</p>
+    <h2>Selected Development Highlights</h2>
+
+    <div class="log-entries">
+      <div class="log-entry">
+        <p class="log-entry-title">Sprite / Dodge Animation</p>
+        <p>Implemented a three-frame dodge animation using SpriteRenderer sprite swapping — no Animator required. Pressing D triggers a crouch → flat sequence tied to the invincibility window.</p>
+      </div>
+      <div class="log-entry">
+        <p class="log-entry-title">Camera System</p>
+        <p>Replaced Cinemachine with a lightweight custom CameraFollow.cs. The camera smoothly trails the cart with a slight look-ahead offset, keeping upcoming track visible at all times.</p>
+      </div>
+      <div class="log-entry">
+        <p class="log-entry-title">Obstacle Hit &amp; Flicker</p>
+        <p>A FlickerCoroutine toggles the player's SpriteRenderer on and off to signal damage. A 1-second invincibility window prevents repeated hits.</p>
+      </div>
+      <div class="log-entry">
+        <p class="log-entry-title">Coin Collection &amp; Points</p>
+        <p>Coins are collected by pressing Space while overlapping a coin trigger. On collect, the coin spins and scales to zero before destroying itself. Points update live in the HUD.</p>
+      </div>
+      <div class="log-entry">
+        <p class="log-entry-title">Game Over States</p>
+        <p>Timer set to 60 seconds. On win or lose, the cart freezes completely — velocity zeroed, all coroutines stopped, sprite reset. Win screen offers a Next Level button; Lose screen offers Restart.</p>
+      </div>
+      <div class="log-entry">
+        <p class="log-entry-title">Instruction Screen</p>
+        <p>Game pauses on load via Time.timeScale = 0. An instructions panel shows controls. Pressing Space dismisses it and begins the ride.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="rail"></div>
+
+  <footer>
+    Coaster Carnage &nbsp;·&nbsp; Made with Unity 6 &nbsp;·&nbsp; 2026
+  </footer>
+
+</body>
+</html>
