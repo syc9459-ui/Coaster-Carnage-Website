@@ -238,6 +238,66 @@
       color: var(--muted);
     }
 
+    /* ── INSPIRATION CARDS ─────────────────────────────────── */
+    .inspo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.4rem;
+      margin-top: 2rem;
+    }
+
+    .inspo-card {
+      background: var(--light);
+      border: 3px solid var(--dark);
+      box-shadow: 5px 5px 0 var(--brown);
+      padding: 1.4rem 1.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .inspo-icon {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.55rem;
+      color: var(--red);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .inspo-source {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .inspo-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .inspo-link {
+      margin-top: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--red);
+      text-decoration: none;
+      border-bottom: 2px solid var(--red);
+      align-self: flex-start;
+    }
+
+    .inspo-link:hover { opacity: 0.7; }
+
+    .inspo-note {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 2rem;
+      max-width: 720px;
+    }
+
     /* ── FOOTER ────────────────────────────────────────────── */
     footer {
       text-align: center;
@@ -267,6 +327,7 @@
     <ul class="nav-links">
       <li><a href="#game">Game</a></li>
       <li><a href="#world">Game World</a></li>
+      <li><a href="#inspiration">Inspiration</a></li>
       <li><a href="#dev">Development</a></li>
     </ul>
   </nav>
@@ -340,9 +401,46 @@
 
   <div class="rail"></div>
 
+  <!-- INSPIRATION -->
+  <section id="inspiration">
+    <p class="section-label">03 · Inspiration</p>
+    <h2>What Shaped Coaster Carnage</h2>
+
+    <div class="prose-block">
+      <p>Coaster Carnage borrows its tone, look, and feel from a handful of games we love. Rather than copy them outright, we used each as a reference point for one piece of the puzzle: the music, the pixel art, and the core gameplay loop.</p>
+    </div>
+
+    <div class="inspo-grid">
+      <div class="inspo-card">
+        <p class="inspo-icon">♪ Music</p>
+        <p class="inspo-source">Stardew Valley</p>
+        <p>Our soundtrack takes cues from Stardew Valley's bouncy, acoustic-driven score. We wanted a soundscape that feels warm and a little chaotic at once: upbeat melodies that make the rickety, falling-apart carnival feel charming instead of grim.</p>
+        <a class="inspo-link" href="https://www.stardewvalley.net/" target="_blank" rel="noopener">Visit Stardew Valley →</a>
+      </div>
+
+      <div class="inspo-card">
+        <p class="inspo-icon">▦ Pixel Art</p>
+        <p class="inspo-source">Stardew Valley</p>
+        <p>The hand-crafted, detail-rich pixel art of Stardew Valley shaped how we approached our own sprites and backgrounds. We aimed for that same sense of warmth and texture: small, readable characters and environments full of little details that reward a closer look.</p>
+        <a class="inspo-link" href="https://www.stardewvalley.net/" target="_blank" rel="noopener">Visit Stardew Valley →</a>
+      </div>
+
+      <div class="inspo-card">
+        <p class="inspo-icon">→ Gameplay</p>
+        <p class="inspo-source">Super Mario Bros.</p>
+        <p>Our core dodge-and-survive loop is inspired by classic Super Mario Bros. side-scrolling gameplay. Just like Mario constantly weaving past obstacles on his way to the flagpole, our player has to duck, dodge, and react in real time as hazards fly toward them mid-ride.</p>
+        <a class="inspo-link" href="https://www.nintendo.com/" target="_blank" rel="noopener">Visit Nintendo →</a>
+      </div>
+    </div>
+
+    <p class="inspo-note">Coaster Carnage is an independent fan project created for educational purposes and is not affiliated with, endorsed by, or sponsored by ConcernedApe or Nintendo. All trademarks belong to their respective owners.</p>
+  </section>
+
+  <div class="rail"></div>
+
   <!-- DEVELOPMENT -->
   <section id="dev">
-    <p class="section-label">03 · Development</p>
+    <p class="section-label">04 · Development</p>
     <h2>Selected Development Highlights</h2>
 
     <div class="log-entries">
@@ -378,6 +476,33 @@
   <footer>
     Coaster Carnage &nbsp;·&nbsp; Made with Unity 6 &nbsp;·&nbsp; 2026
   </footer>
+
+<audio id="bg-music" loop>
+  <source src="your-music-file.mp3" type="audio/mpeg">
+</audio>
+
+<button id="music-toggle" style="position:fixed; bottom:20px; right:20px; z-index:200;
+  background:var(--dark); color:#fff; border:none; padding:0.6rem 1rem;
+  font-family:'Press Start 2P', monospace; font-size:0.5rem; cursor:pointer;">
+  🔊 Music
+</button>
+
+<script>
+  const music = document.getElementById('bg-music');
+  const toggleBtn = document.getElementById('music-toggle');
+  let playing = false;
+
+  toggleBtn.addEventListener('click', () => {
+    if (playing) {
+      music.pause();
+      toggleBtn.textContent = '🔇 Music';
+    } else {
+      music.play();
+      toggleBtn.textContent = '🔊 Music';
+    }
+    playing = !playing;
+  });
+</script>
 
 </body>
 </html>
